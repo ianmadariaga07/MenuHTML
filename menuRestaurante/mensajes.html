@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="bootstrap.css">
+    <title>Document</title>
+  </head>
+  <body onload="obtenerMensajes()">
+    <div id="mensajes" class="container"></div>
+    <script>
+      function obtenerMensajes() {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+
+        fetch(
+          "http://127.0.0.1:8000/api/restaurantes/Restaurante Aragon/mensajes",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            pintarMensajes(result)
+          })
+          .catch((error) => console.error(error));
+      }
+
+      //Recibe un array para pintar los mensajes
+      function pintarMensajes(array) {
+        var div = document.getElementById("mensajes")
+
+        array.forEach((element) => {
+          var parrafo = document.createElement("p");
+          parrafo.innerText = element.mensaje;
+          var parrafoNombre = document.createElement("p");
+          parrafoNombre.innerText = element.nombre;
+
+          parrafoNombre.style.color = "blue"
+          //console.log(parrafo);
+          div.appendChild(parrafo)
+          div.appendChild(parrafoNombre)
+
+        });
+      }
+    </script>
+  </body>
+</html>
